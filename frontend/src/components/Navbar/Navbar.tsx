@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { Search } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
+import { CircleUserRound } from 'lucide-react';
 
 const Navbar=()=> {
     return (
@@ -14,9 +15,12 @@ const Navbar=()=> {
                         <input type="text" placeholder="Search for movies, events or shows" className="h-9 w-[600px] outline-none"/>
                     </div>
                 </div>
-                <div className="right flex items-center justify-end text-black p-4 h-15 bg-white">
+                <div className="right flex items-center justify-end text-black p-4 h-15 bg-white gap-x-2">
                     <p className="dropdown flex items-center mx-5 cursor-pointer text-sm gap-x-3">Bengaluru<ChevronDown height={15} /></p>
                     <Link href="/" className="theme_btn1 linkstylenone no-underline text-white font-bold bg-[#f84464] text-xs h-[25px] leading-[25px] w-[67px] text-center rounded border border-[#f84464] block items-center justify-center">Logout</Link> 
+                    <Link href="/profile" className='linkstylenone'>
+                    <CircleUserRound className='theme_icon1' />
+                </Link>
                 </div> 
             </nav>
     );
