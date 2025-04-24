@@ -2,8 +2,11 @@
 import { useParams, usePathname } from "next/navigation";
 import React from "react";
 import { Star } from "lucide-react";
+import Navbar from "@/components/Navbar/Navbar";
+import Link from "next/link";
 function moviecard() {
-  // const pathname = usePathname()
+  const pathname = usePathname()
+  console.log(pathname)
   // const { movieid } = useParams()
   const moviedetails = {
     _id: "65101a2acc5b257e6f2816a5",
@@ -23,8 +26,9 @@ function moviecard() {
   };
   return (
     <div>
+      <Navbar/>
       <div
-        className="relative bg-cover bg-center h-[20%] w-full"
+        className="relative bg-cover bg-center h-[20%] w-full "
         style={{ backgroundImage: `url(${moviedetails.landscapeImgUrl})` }}
       >
         <div className="absolute inset-0 bg-black opacity-60" />
@@ -38,12 +42,12 @@ function moviecard() {
           </div>
           <div className="moviedetails flex flex-col gap-5 w-[50%] pt-7">
             <h1 className="text-4xl font-bold ">{moviedetails.title}</h1>
-            <div className="rating bg-gray-700 w-[40%] flex justify-between items-center pr-5 pl-5 p-2 gap-1 border-0 rounded-[5px]">
+            <div className="rating w-[40%] flex justify-between items-center pr-5 pl-5 p-2 gap-1 border-0 rounded-[5px]" style={{backgroundColor : "#333333"}}>
               <div className="rating flex gap-1">
                 <Star />
                 <p>{moviedetails.rating}/10</p>
               </div>
-              <button className="bg-white text-black border-0 rounded-[3px] p-[3px]">
+              <button className="bg-white font-bold text-black border-0 rounded-[3px] p-[10px]">
                 Rate now
               </button>
             </div>
@@ -54,7 +58,7 @@ function moviecard() {
               </p>
             </div>
             <div className="bookticket bg-rose-500 w-[20%] p-2 border-0 cursor-pointer rounded-[5px] font-bold text-center">
-              <button>Book ticket</button>
+              <Link href={`${pathname}/buytickets`}>Book ticket</Link>
             </div>
           </div>
         </div>
