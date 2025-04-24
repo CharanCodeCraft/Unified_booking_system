@@ -13,8 +13,8 @@
     "next": "15.3.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "swiper": "^11.2.6",
-    "react-horizontal-datepicker": "^2.0.3"
+    "react-horizontal-datepicker": "^2.0.3",
+    "swiper": "^11.2.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
