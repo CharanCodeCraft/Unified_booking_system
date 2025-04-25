@@ -2,7 +2,10 @@
 import Navbar from "@/components/Navbar/Navbar";
 import React from "react";
 import DatePicker from "react-horizontal-datepicker";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 function screenslist() {
+  const pathname = usePathname();
   const [selectedDate, setSelectedDate] = React.useState<any>(new Date());
   const movie = {
     moviename: "Kesari Chapter 2: The Untold Story of Jallianwala Bagh",
@@ -59,7 +62,7 @@ function screenslist() {
           <p>{screen.location}</p>
         </div>
         <div className="selectbtn bookticket bg-rose-500 w-[10%] h-8  border-0 cursor-pointer rounded-[5px] font-bold text-center text-white">
-          <button className="text-center mt-1">Select</button>
+          <Link href={`${pathname}/${screen.name}`} className="cursor-pointer">Select</Link>
         </div>
       </div>)
       })}
