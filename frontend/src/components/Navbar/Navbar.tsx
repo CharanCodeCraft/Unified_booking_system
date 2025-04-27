@@ -1,11 +1,16 @@
+"use client";   
+
 import React from "react";
 import Link from "next/link";
 
 import { Search } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
 import { CircleUserRound } from 'lucide-react';
+import LocationPopup from "@/popups/location/LocationPopup";
 
 const Navbar=()=> {
+    const [showLocationPopup, setShowLocationPopup] = React.useState<boolean>(false);
+
     return (
             <nav className="bg-white text-white flex justify-between items-center px-5 py-1.5">
                 <div className="left justify-center items-center flex text-black p-4 h-15 bg-white">
@@ -16,12 +21,22 @@ const Navbar=()=> {
                     </div>
                 </div>
                 <div className="right flex items-center justify-end text-black p-4 h-15 bg-white gap-x-2">
-                    <p className="dropdown flex items-center mx-5 cursor-pointer text-sm gap-x-3">Bengaluru<ChevronDown height={15} /></p>
-                    <Link href="/" className="theme_btn1 linkstylenone no-underline text-white font-bold bg-[#f84464] text-xs h-[25px] leading-[25px] w-[67px] text-center rounded border border-[#f84464] block items-center justify-center">Logout</Link> 
+                    <p className="dropdown flex items-center mx-5 cursor-pointer text-sm gap-x-3"
+                    onClick={() => setShowLocationPopup(true)}
+                    >
+                        Bengaluru
+                    <ChevronDown height={15} /></p>
+                    <Link href="/auth/signin" className="theme_btn1 linkstylenone no-underline text-white font-bold bg-[#f84464] text-xs h-[25px] leading-[25px] w-[67px] text-center rounded border border-[#f84464] block items-center justify-center">Login</Link> 
                     <Link href="/profile" className='linkstylenone'>
                     <CircleUserRound className='theme_icon1' />
                 </Link>
                 </div> 
+                {
+                    showLocationPopup && 
+                    <LocationPopup 
+                        setShowLocationPopup={setShowLocationPopup}
+                    />
+                }
             </nav>
     );
 }
