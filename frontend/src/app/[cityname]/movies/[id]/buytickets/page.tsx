@@ -42,7 +42,7 @@ function screenslist() {
             getSelectedDay={(date: any) => {
               setSelectedDate(date);
             }}
-            endDate={5}
+            endDate={100}
             selectDate={selectedDate}
             labelFormat={"MMMM"}
             color={"rgb(248, 68, 100)"}
@@ -61,7 +61,7 @@ function screenslist() {
           <h1 className="text-2xl font-bold">{screen.name}</h1>
           <p>{screen.location}</p>
         </div>
-        <div className="selectbtn bookticket bg-rose-500 w-[10%] h-8  border-0 cursor-pointer rounded-[5px] font-bold text-center text-white">
+        <div className="selectbtn bookticket bg-rose-500 w-[10%] h-8  border-0 cursor-pointer rounded-[5px] pt-[2px] font-bold text-center text-white max-[900px]:w-[50%]">
           <Link href={`${pathname}/${screen.name}`} className="cursor-pointer">Select</Link>
         </div>
       </div>)

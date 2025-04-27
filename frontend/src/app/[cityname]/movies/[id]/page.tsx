@@ -29,10 +29,10 @@ function moviecard() {
       <Navbar/>
       <div
         className="relative bg-cover bg-center h-[20%] w-full "
-        style={{ backgroundImage: `url(${moviedetails.landscapeImgUrl})` }}
+        style={{ backgroundImage: `url(${moviedetails.landscapeImgUrl})`,objectFit: "fill" }}
       >
         <div className="absolute inset-0 bg-black opacity-60" />
-        <div className="relative z-10 p-6 text-white flex gap-10">
+        <div className="relative z-10 p-6 text-white flex gap-10 max-[900px]:gap-5">
           <div className="img">
             <img
               src={moviedetails.portraitImgUrl}
@@ -40,31 +40,31 @@ function moviecard() {
               className="border-0 rounded-2xl"
             />
           </div>
-          <div className="moviedetails flex flex-col gap-5 w-[50%] pt-7">
-            <h1 className="text-4xl font-bold ">{moviedetails.title}</h1>
-            <div className="rating w-[40%] flex justify-between items-center pr-5 pl-5 p-2 gap-1 border-0 rounded-[5px]" style={{backgroundColor : "#333333"}}>
+          <div className="moviedetails flex flex-col gap-5 w-[50%] pt-7 max-[900px]:pt-0 max-[900px]:w-[100%] max-[900px]:gap-3">
+            <h1 className="text-4xl font-bold max-[900px]:text-[16px]">{moviedetails.title}</h1>
+            <div className="rating w-[40%] flex justify-between items-center pr-5 pl-5 p-2 gap-1 border-0 rounded-[5px] max-[900px]:w-[100%] max-[900px]:p-[8px]" style={{backgroundColor : "#333333"}}>
               <div className="rating flex gap-1">
                 <Star />
                 <p>{moviedetails.rating}/10</p>
               </div>
-              <button className="bg-white font-bold text-black border-0 rounded-[3px] p-[10px]">
+              <button className="bg-white font-bold text-black border-0 rounded-[3px] p-[10px] max-[900px]:text-[10px] max-[900px]:w-[50%] max-[900px]:p-[2px]">
                 Rate now
               </button>
             </div>
-            <div className="duration flex gap-2">
+            <div className="duration flex gap-2 max-[900px]:gap-1">
               <p>{moviedetails.duration} min</p>
               <p>
                 {moviedetails.genre[0]}/{moviedetails.genre[1]}
               </p>
             </div>
-            <div className="bookticket bg-rose-500 w-[20%] p-2 border-0 cursor-pointer rounded-[5px] font-bold text-center">
+            <div className="bookticket bg-rose-500 w-[20%] p-2 border-0 cursor-pointer rounded-[5px] font-bold text-center max-[900px]:w-[100%]">
               <Link href={`${pathname}/buytickets`}>Book ticket</Link>
             </div>
           </div>
         </div>
       </div>
       <div className="cast">
-        <div className="desc m-5 ml-15 w-[60%]">
+        <div className="desc m-5 ml-15 w-[60%] max-[900px]:ml-10 max-[900px]:w-[80%]">
           <h1 className="font-bold text-2xl">About the movie</h1>
           <p className="mt-3">
             Inspired by the annals of history, this is the riveting tale of
@@ -73,44 +73,44 @@ function moviecard() {
             world the brutal truth behind the Jallianwala Bagh Massacre.
           </p>
         </div>
-        <hr className="w-[70%] ml-15 opacity-40" />
-        <div className="castnames ml-15 m-5">
+        <hr className="w-[70%] ml-15 opacity-40 max-[900px]:ml-10 max-[900px]:w-[80%]" />
+        <div className="castnames ml-15 m-5 max-[900px]:ml-10">
           <h1 className="font-bold text-2xl mb-5">Cast</h1>
-          <div className="imgdiv flex gap-10">
+          <div className="imgdiv flex gap-10 max-[900px]:gap-5">
             <div className="imges w-36">
-              <div className="roles flex flex-col justify-center items-center">
+              <div className="roles flex flex-col justify-center ">
                 <img
                   src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
                   className="border-0 rounded-full"
                   alt=""
                 />
-                <p className="font-bold">Akshay Kumar</p>
+                <p className="font-bold text-center">Akshay Kumar</p>
                 <p className="text-center text-gray-500">
                   as Chettur Sankaran Nair
                 </p>
               </div>
             </div>
             <div className="imges w-36 ">
-              <div className="roles flex flex-col justify-center items-center">
+              <div className="roles flex flex-col ">
                 <img
                   src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
                   className="border-0 rounded-full"
                   alt=""
                 />
-                <p className="font-bold">Akshay Kumar</p>
+                <p className="font-bold text-center">Akshay Kumar</p>
                 <p className="text-center text-gray-500">
                   as Chettur Sankaran Nair
                 </p>
               </div>
             </div>
             <div className="imges w-36 ">
-              <div className="roles flex flex-col justify-center items-center">
+              <div className="roles flex flex-col">
                 <img
                   src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
                   className="border-0 rounded-full"
                   alt=""
                 />
-                <p className="font-bold">Akshay Kumar</p>
+                <p className="font-bold text-center">Akshay Kumar</p>
                 <p className="text-center text-gray-500">
                   as Chettur Sankaran Nair
                 </p>
@@ -118,44 +118,44 @@ function moviecard() {
             </div>
           </div>
         </div>
-        <hr className="w-[70%] ml-15 opacity-40" />
-        <div className="castnames ml-15 m-5">
+        <hr className="w-[70%] ml-15 opacity-40 max-[900px]:ml-10 max-[900px]:w-[80%]" />
+        <div className="castnames ml-15 m-5 max-[900px]:ml-10">
           <h1 className="font-bold text-2xl mb-5">Crew</h1>
-          <div className="imgdiv flex gap-10">
+          <div className="imgdiv flex gap-10 max-[900px]:gap-5">
             <div className="imges w-36">
-              <div className="roles flex flex-col justify-center items-center">
+              <div className="roles flex flex-col ">
                 <img
                   src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
                   className="border-0 rounded-full"
                   alt=""
                 />
-                <p className="font-bold">Akshay Kumar</p>
+                <p className="font-bold text-center">Akshay Kumar</p>
                 <p className="text-center text-gray-500">
                   as Chettur Sankaran Nair
                 </p>
               </div>
             </div>
             <div className="imges w-36 ">
-              <div className="roles flex flex-col justify-center items-center">
+              <div className="roles flex flex-col">
                 <img
                   src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
                   className="border-0 rounded-full"
                   alt=""
                 />
-                <p className="font-bold">Akshay Kumar</p>
+                <p className="font-bold text-center">Akshay Kumar</p>
                 <p className="text-center text-gray-500">
                   as Chettur Sankaran Nair
                 </p>
               </div>
             </div>
             <div className="imges w-36 ">
-              <div className="roles flex flex-col justify-center items-center">
+              <div className="roles flex flex-col">
                 <img
                   src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
                   className="border-0 rounded-full"
                   alt=""
                 />
-                <p className="font-bold">Akshay Kumar</p>
+                <p className="font-bold text-center">Akshay Kumar</p>
                 <p className="text-center text-gray-500">
                   as Chettur Sankaran Nair
                 </p>

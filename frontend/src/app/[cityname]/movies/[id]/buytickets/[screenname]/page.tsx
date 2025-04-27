@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import Navbar from "@/components/Navbar/Navbar";
 function page() {
   const movie = {
     moviename: "Kesari Chapter 2: The Untold Story of Jallianwala Bagh",
@@ -1326,7 +1327,7 @@ function page() {
     )
     // console.log(selectedseat)
     return(
-      <div className="layout w-[60%] m-auto">
+      <div className="layout w-[60%] m-auto max-[900px]:m-0">
         {screendetails.timeslots[index].seats.map((seat: any) => {
           return (
             <div className="seat flex flex-col gap-5 p-5" >
@@ -1379,6 +1380,9 @@ function page() {
   }
   return (
     <div>
+      <div className="na">
+        <Navbar/>
+      </div>
       <div className="detils gap-2 items-center m-6 flex">
         <div className="icon">
           <Link href={"/"}><ChevronLeft className=" cursor-pointer" /></Link>
@@ -1397,13 +1401,13 @@ function page() {
         >
           {screendetails.timeslots.map((time: any) => {
             return (
-              <div className="timeslot w-[10%] p-2 text-center border-1 border-green bg-white text-green-600" style={{ backgroundColor: selectedtime === time.time ? "green" : "white",color: selectedtime === time.time ? "white" : "green"}}>
+              <div className="timeslot w-[10%] max-[900px]:w-[30%] p-2 text-center border-1 border-green bg-white text-green-600" style={{ backgroundColor: selectedtime === time.time ? "green" : "white",color: selectedtime === time.time ? "white" : "green"}}>
                 <button className="cursor-pointer" onClick={() => setselectedtime(time.time)} >{time.time}</button>
               </div>
             );
           })}
         </div>
-        <div className="genseatslayout p-5" style={{ backgroundColor: "#FAFAFA" }}>
+        <div className="genseatslayout p-5 max-[900px]:overflow-x-scroll" style={{ backgroundColor: "#FAFAFA" }}>
         <div className="indicators flex gap-4 justify-center  ">
           <div className="not-ava flex items-center gap-2">
             <div className="box w-3 h-3" style={{ backgroundColor: "#D1D5DC" }}></div>
