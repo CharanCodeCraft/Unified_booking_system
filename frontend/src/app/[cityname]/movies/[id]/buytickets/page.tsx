@@ -31,7 +31,7 @@ function screenslist() {
 
   return (
     <div>
-      <Navbar />
+      
       <div className="screencontainer m-10">
         <div className="moviedetails mb-5">
           <h1 className="text-3xl font-bold">{movie.moviename}</h1>

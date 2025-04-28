@@ -26,7 +26,7 @@ function moviecard() {
   };
   return (
     <div>
-      <Navbar/>
+      
       <div
         className="relative bg-cover bg-center h-[20%] w-full "
         style={{ backgroundImage: `url(${moviedetails.landscapeImgUrl})`,objectFit: "fill" }}

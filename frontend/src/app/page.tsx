@@ -7,6 +7,7 @@ import HomeSlider from "@/components/HomeSlider/HomeSlider";
 import { useState } from "react";
 import React from "react";
 import LocationPopup from "@/popups/location/LocationPopup";
+import NavbarWrapper from "@/components/Navbar/NavbarWrapper";
 
 
 export default function Home() {
@@ -15,12 +16,12 @@ export default function Home() {
     const [showLocationPopup, setShowLocationPopup] = React.useState<boolean>(false);
   return (
     <div>
-       <Navbar selectedCity={selectedCity} setShowLocationPopup={setShowLocationPopup} />
+       {/* <Navbar selectedCity={selectedCity} setShowLocationPopup={setShowLocationPopup} />
       
       {showLocationPopup && (
         <LocationPopup setShowLocationPopup={setShowLocationPopup} setSelectedCity={setSelectedCity} />
-      )}
-      
+      )} */}
+     
       <HomeSlider/>
       <Movielist/>
     </div>

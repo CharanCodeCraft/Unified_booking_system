@@ -1381,7 +1381,7 @@ function page() {
   return (
     <div>
       <div className="na">
-        <Navbar/>
+        
       </div>
       <div className="detils gap-2 items-center m-6 flex">
         <div className="icon">

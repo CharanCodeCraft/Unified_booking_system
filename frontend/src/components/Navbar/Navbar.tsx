@@ -23,7 +23,7 @@ const Navbar=({ selectedCity, setShowLocationPopup }: { selectedCity: string, se
                     </div>
                 </div>
                 <div className="right flex items-center justify-end text-black p-4 h-15 bg-white gap-x-2 max-[900px]:hidden">
-                    <p className="dropdown flex items-center mx-5 cursor-pointer text-sm gap-x-3"
+                    <p className="dropdown flex items-center cursor-pointer text-sm md:text-base gap-2 md:gap-3 mx-2 md:mx-5"
                     onClick={() => setShowLocationPopup(true)}
                     >
                         {selectedCity ? selectedCity : "Select City"}
