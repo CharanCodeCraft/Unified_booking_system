@@ -5,17 +5,17 @@ import '../popup.css'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 const LocationPopup = (
-    {
-        setShowLocationPopup
-    }: {
-        setShowLocationPopup: React.Dispatch<React.SetStateAction<boolean>>
-    }
+   { setShowLocationPopup,
+    setSelectedCity,
+  }: {
+    setShowLocationPopup: React.Dispatch<React.SetStateAction<boolean>>;
+    setSelectedCity: React.Dispatch<React.SetStateAction<string>>;}
 ) => {
 
     const [cities, setCities] = React.useState<any[]>([])
 
 
-    const [selectedCity, setSelectedCity] = React.useState<any>(null)
+    // const [selectedCity, setSelectedCity] = React.useState<any>(null)
 
     const getcities = async () => {
         const indianCities = [
@@ -58,33 +58,10 @@ const LocationPopup = (
     }, [])
 
     const handleSave = () => {
-        // setShowLocationPopup(false)
-        fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/auth/changeCity`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-                city: selectedCity
-            })
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.ok) {
-                    // toast(data.message, {
-                    //     type: 'success'
-                    // })
-                    setShowLocationPopup(false)
-                    window.location.reload()
-                }
-            })
-            .catch((err) => {
-                toast(err.message, {
-                    type: 'error'
-                })
-                console.log(err)
-            })
+
+
+         setShowLocationPopup(false)
+        
     }
 
     return (
@@ -104,9 +81,11 @@ const LocationPopup = (
                     }
                 </select>
 
-                <button className='btn font-bold'
+                <div className='font-bold bg-red-500 text-white text-xs h-[25px]  w-[67px] text-center rounded '>
+                    <button className='btn text-white text-[15px] '
                     onClick={handleSave}
-                >Save</button>
+                    >Save</button>
+                </div>
             </div>
         </div>
     )

@@ -45,8 +45,8 @@ const HomeSlider = () => {
       modules={[Pagination,Autoplay,Navigation]}
       autoplay={{ delay: 2000, disableOnInteraction: false }}
       loop={true}
-      navigation={true}
-      className="mySwiper h-[300px] w-full"
+      // navigation={true}
+      className="mySwiper h-[300px] w-full max-[900px]:h-[30%] max-[900px]:w-full"
     >
        {banners.map((banner, index) => (
         <SwiperSlide key={index}>
