@@ -25,7 +25,7 @@ function movielist() {
   return (
     <div>
       <h1 className='text-3xl font-bold mt-6 ml-6'>Recommended Movies</h1>
-      <div className="moviecontainer flex gap-0.5 m-6 max-[900px]:overflow-x-scroll max-[900px]:gap-6" >
+      <div className="moviecontainer flex gap-0.5 m-6 max-[900px]:overflow-x-scroll max-[900px]:gap-3" >
         {movielist.map((movie:any,key:number) => (
           <div className="moviecard flex flex-col cursor-pointer min-[900px]:w-[25%]" onClick={()=>{
             router.push(`/${cityname}/movies/${movie.id}`)

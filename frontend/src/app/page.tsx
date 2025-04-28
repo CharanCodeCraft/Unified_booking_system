@@ -13,7 +13,7 @@ import NavbarWrapper from "@/components/Navbar/NavbarWrapper";
 export default function Home() {
 
   const [selectedCity, setSelectedCity] = useState<string>('');
-    const [showLocationPopup, setShowLocationPopup] = React.useState<boolean>(false);
+  const [showLocationPopup, setShowLocationPopup] = React.useState<boolean>(false);
   return (
     <div>
        {/* <Navbar selectedCity={selectedCity} setShowLocationPopup={setShowLocationPopup} />
