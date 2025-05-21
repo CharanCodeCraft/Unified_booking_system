@@ -6,6 +6,8 @@ import Navbar from '@/components/Navbar/Navbar';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import logo from '@/assets/final-logo.jpg';
+import { useRouter } from 'next/navigation';
+
 
 interface FormData {
     email: string;
@@ -14,6 +16,7 @@ interface FormData {
 
 
 const Signin = () => {
+    const router = useRouter();
     const[formData, setFormData] = useState<FormData>({
         email: '',
         password: ''
@@ -46,6 +49,20 @@ const Signin = () => {
             setErrors(validationErrors);
             return;
         }
+        console.log(formData)
+        const response = await fetch('http://localhost:8000/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+                const data = await response.json();
+                console.log(data.ok)
+                if(data.ok){
+                  router.push('/');
+                    toast.success(data.message);
+                }
     }
 
   return (
