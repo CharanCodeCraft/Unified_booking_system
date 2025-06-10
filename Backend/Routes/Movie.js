@@ -89,13 +89,110 @@ router.post('/addmoviescheduletoscreen',adminTokenHandler,async(req,res,next)=>{
 
 //user
 router.post('/bookticket',authTokenHandler,async(req,res,next)=>{
-    
+    try {
+        const{showTime,showDate,movieId,screenId,seats,totalPrice,paymentId,paymentType }= req.body;
+
+        //creating a function to verify payment id
+
+        const screen=await Screen.findById(screenId);
+        if(!screen){
+            return res.status(404).json({
+                ok:false,
+                message:'Screen does not exist'
+            });
+        }
+
+        const movieSchedule=screen.movieSchedules.find(schedule=>schedule.movieId==movieId && schedule.showTime==showTime && schedule.showDate==showDate);
+
+        if(!movieSchedule){
+            return res.status(404).json({
+                ok:false,
+                message:'Movie schedule does not exist'
+            });
+        }
+
+        const user=await User.findById(req.userId);
+        if(!user){
+            return res.status(404).json({
+                ok:false,
+                message:'User does not exist'
+            });
+        }
+
+        const newBooking=new Booking({userId:req.userId,showTime,showDate,movieId,screenId,seats,totalPrice,paymentId,paymentType});
+        await newBooking.save();
+        
+        const seatIds=seats.map(seat=>seat.seat_id);
+
+     
+        movieSchedule.notAvailableSeats.push(...seatIds);
+        
+        await screen.save();
+        
+        user.bookings.push(newBooking._id);
+        await user.save();
+        
+        return res.status(201).json({
+            ok:true,
+            message:'Ticket booked successfully',
+            
+        });
+
+
+    } catch (err) {
+        next(err);
+    }
 })
-router.get('/getmovies',async(req,res,next)=>{
-    
+router.get('/movies',async(req,res,next)=>{
+    try {
+         const movies = await Movie.find();
+
+        //returning the list of movies as JSON response
+        res.status(200).json({
+            ok: true,
+            data: movies,
+            message: 'Movies retrieved successfully'
+        });
+        
+    } catch (err) {
+        next(err);
+        
+    }
 })
-router.get('/getscreens',async(req,res,next)=>{
-    
+router.get('/movies/:id', async (req, res, next) => {
+    try {
+        const movieId = req.params.id;
+        const movie = await Movie.findById(movieId);
+        if (!movie) {
+            
+            return res.status(404).json({
+                ok: false,
+                message: 'Movie not found'
+            });
+        }
+
+        res.status(200).json({
+            ok: true,
+            data: movie,
+            message: 'Movie retrieved successfully'
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+})
+router.get('/screensbycity',async(req,res,next)=>{
+    try {
+        const city=req.body.city;
+        const screens=await Screen.find({city});
+        if(!screens || screens.length===0){
+            return res.status(404).json(createResponse(false,'screens not found'))
+        }
+
+        res.status(200).json(createResponse(true,'screens retrieved successfully',screens));
+    } catch (err) {
+        next(err);
+    }
 })
    
 
