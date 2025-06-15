@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import Image from "next/image";
 import styles from "./page.module.css";
@@ -22,46 +23,56 @@ const Signin = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    //prevent default form submission
     e.preventDefault();
+
+    if (!formData.email || !formData.password) {
+      toast.error("Email and password are required", {
+        position: "top-center",
+      });
+      return;
+    }
+
     try {
-      if (!formData.email) {
-        toast.error("Email is required");
-      }
-      if (!formData.password) {
-        toast.error("Password is required");
-      }
-      console.log(formData);
-      if(formData.email && formData.password){
-        const response = await fetch(
-          process.env.NEXT_PUBLIC_BACKEND_API + "/admin/login",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-            credentials: "include",
-          }
-        );
-        const data = await response.json();
-        console.log(data.ok);
-        if (data.ok) {
-          router.push("/pages/createmovie");
-          toast.success(data.message);
-        } else {
-          toast.error(data.message);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_API}/admin/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+          credentials: "include",
         }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success("Admin Login Successful", {
+          position: "top-center",
+        });
+
+        // Delay a little to show toast
+        setTimeout(() => {
+          router.push("/pages/movie/createmovie");
+        }, 1500);
+      } else {
+        toast.error(data.message || "Admin Login Failed", {
+          position: "top-center",
+        });
       }
-    } catch {
-      toast.error("something went wrong");
+    } catch (error) {
+      console.error("Error during login:", error);
+      toast.error("Something went wrong", {
+        position: "top-center",
+      });
     }
   };
 
@@ -74,22 +85,18 @@ const Signin = () => {
         </div>
         <div className="right w-full md:w-[60%] flex justify-center items-center p-6 bg-red-200">
           <div className="w-full max-w-md">
-            {/* Heading */}
             <h2 className="text-3xl font-bold text-center text-col1 mb-6">
-              Signin
+              Sign In
             </h2>
 
             <form
-              style={{
-                display: "flex",
-                flexDirection: "column",
-              }}
+              style={{ display: "flex", flexDirection: "column" }}
               onSubmit={handleSubmit}
             >
               <div className="forminput_cont flex flex-col my-2 gap-2 w-full relative">
                 <label className="font-semibold">Email</label>
                 <input
-                  type="text"
+                  type="email"
                   placeholder="Enter Your Email"
                   name="email"
                   value={formData.email}
