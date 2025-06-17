@@ -50,7 +50,7 @@ const Navbar = () => {
           <img src="/final-logo.jpg" alt="logo" className="h-20" />
         </div>
         <div className="right flex items-center justify-end text-black p-4 h-15 bg-white gap-x-2 max-[900px]:hidden">
-          {isadminauth ? (
+          {!isadminauth ? (
             <>
               <Link
                 href="/pages/createmovie"
@@ -110,7 +110,7 @@ const Navbar = () => {
 
         {isMobileMenuOpen && (
           <div className="flex flex-col bg-white px-4 py-3 gap-2 shadow-md">
-            {isadminauth ? (
+            {!isadminauth ? (
               <>
                 <Link
                   href="/pages/movie/createmovie"
