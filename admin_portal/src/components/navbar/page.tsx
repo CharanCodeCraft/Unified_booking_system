@@ -19,7 +19,7 @@ const Navbar = () => {
         process.env.NEXT_PUBLIC_BACKEND_API + "/admin/checklogin",
         {
           method: "GET",
-          headers: {
+          headers: { 
             "Content-Type": "application/json",
           },
           credentials: "include",
@@ -37,6 +37,30 @@ const Navbar = () => {
       setisadminauth(false);
     }
   };
+  const handlelogut = async () => {
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_BACKEND_API + "/admin/logout",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      if (data.ok) {
+        setisadminauth(false);
+      } else {
+        setisadminauth(true);
+      }
+    } catch {
+      console.log("error");
+      setisadminauth(true);
+    }
+  };
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -50,7 +74,7 @@ const Navbar = () => {
           <img src="/final-logo.jpg" alt="logo" className="h-20" />
         </div>
         <div className="right flex items-center justify-end text-black p-4 h-15 bg-white gap-x-2 max-[900px]:hidden">
-          {!isadminauth ? (
+          {isadminauth ? (
             <>
               <Link
                 href="/pages/createmovie"
@@ -75,6 +99,13 @@ const Navbar = () => {
                 className="theme_btn1 linkstylenone no-underline text-white font-bold bg-[#f84464] text-xs h-[25px] leading-[25px] w-[87px] text-center rounded border border-[#f84464] block items-center justify-center"
               >
                 Add Celeb
+              </Link>
+              <Link
+                href="/auth/signin"
+                onClick={handlelogut}
+                className="theme_btn1 linkstylenone no-underline text-white font-bold bg-[#f84464] text-xs h-[25px] leading-[25px] w-[87px] text-center rounded border border-[#f84464] block items-center justify-center"
+              >
+                Logut
               </Link>
             </>
           ) : (
@@ -110,10 +141,10 @@ const Navbar = () => {
 
         {isMobileMenuOpen && (
           <div className="flex flex-col bg-white px-4 py-3 gap-2 shadow-md">
-            {!isadminauth ? (
+            {isadminauth ? (
               <>
                 <Link
-                  href="/pages/movie/createmovie"
+                  href="/pages/createmovie"
                   className="bg-[#f84464] text-white text-sm font-bold py-1 px-3 rounded"
                 >
                   Add Movie
