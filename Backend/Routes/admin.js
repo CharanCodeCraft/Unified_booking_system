@@ -40,6 +40,11 @@ router.post('/login',async(req,res,next)=>{
         next(err)
     }
 })
+router.get('/logout',async(req,res)=>{
+    res.clearCookie('authtoken');
+    res.clearCookie('refreshtoken');
+    return res.status(200).json(createres(true,'user logged out successfully'))
+})
 router.get('/checklogin',adminauthcheck,async(req,res)=>{
     res.json({
         adminid:req.adminid,
