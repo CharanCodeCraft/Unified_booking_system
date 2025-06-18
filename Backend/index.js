@@ -12,6 +12,7 @@ const cookieParser = require('cookie-parser');
 const authRouter = require('./Routes/Auth')
 const adminRouter = require('./Routes/admin')
 const movieRoutes = require('./Routes/Movie')
+const imageroute = require('./Routes/imageUploadRoutes')
 
 app.use(bodyParser.json());
 const allowedOrigins = ['http://localhost:3000','http://localhost:3001']; // Add more origins as needed
@@ -24,7 +25,7 @@ app.use(
                 callback(new Error('Not allowed by CORS'));
             }
         },
-        credentials: true, // Allow credentials
+        credentials: true,
     })
 );
 app.use(cookieParser());
@@ -32,6 +33,7 @@ app.use(cookieParser());
 app.use('/auth', authRouter)
 app.use('/admin', adminRouter)
 app.use('/movie', movieRoutes)
+app.use('/image', imageroute)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')

@@ -16,7 +16,7 @@ const LocationPopup = (
 
 
     // const [selectedCity, setSelectedCity] = React.useState<any>(null)
-
+    
     const getcities = async () => {
         const indianCities = [
             "Jabalpur",
@@ -56,11 +56,38 @@ const LocationPopup = (
     React.useEffect(() => {
         getcities()
     }, [])
-
-    const handleSave = () => {
-
-
-         setShowLocationPopup(false)
+    const changecity= async(selectedCity:string) => {
+        try {
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_BACKEND_API}/auth/changecity`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ city: selectedCity }),
+                }
+            );
+            const data = await response.json();
+            console.log(data);
+            if (data.ok) {
+                toast.success("City changed successfully", {
+                    position: "top-center",
+                });
+            } else {
+                toast.error("City change failed", {
+                    position: "top-center",
+                });
+            }
+        } catch (error) {
+            console.error("Error during city change:", error);
+        }
+    }
+    function handleSave(selectedCity: string) {
+        setSelectedCity(selectedCity)
+        changecity(selectedCity)
+        setShowLocationPopup(false)
         
     }
 
@@ -70,7 +97,7 @@ const LocationPopup = (
             <select
                 className='select text-black w-[90%] sm:w-[80%] md:w-[70%] lg:w-[60%] rounded-2xl shadow-md border-0 outline-none py-2 px-5 text-base sm:text-lg md:text-xl cursor-pointer'
                 onChange={(e) => {
-                    setSelectedCity(e.target.value)
+                    handleSave(e.target.value)
                 }}
             >
                 <option className='text-[1.2rem]' value="" disabled selected>Select your city</option>
@@ -81,11 +108,11 @@ const LocationPopup = (
                 }
             </select>
     
-            <div className='font-bold bg-red-500 text-white text-xs sm:text-sm md:text-base h-[25px] sm:h-[30px] md:h-[35px] w-[67px] sm:w-[80px] md:w-[100px] text-center rounded'>
+            {/* <div className='font-bold bg-red-500 text-white text-xs sm:text-sm md:text-base h-[25px] sm:h-[30px] md:h-[35px] w-[67px] sm:w-[80px] md:w-[100px] text-center rounded'>
                 <button className='btn text-white text-[15px] sm:text-[16px] md:text-[18px]'
                     onClick={handleSave}
                 >Save</button>
-            </div>
+            </div> */}
         </div>
     </div>
     

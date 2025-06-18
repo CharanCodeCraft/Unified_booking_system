@@ -5,6 +5,7 @@ const userschema=new mongoose.Schema({
     email:{type:String,required:true,unique:true},
     password:{type:String,required:true},
     bookings:{type:Array,default:[]},
+    city:{type:String,required:true},
 },{
     timestamps:true
 })

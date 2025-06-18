@@ -1,29 +1,57 @@
 "use client";
 import { useParams, usePathname } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { Star } from "lucide-react";
 import Navbar from "@/components/Navbar/Navbar";
 import Link from "next/link";
 function moviecard() {
   const pathname = usePathname()
-  console.log(pathname)
-  // const { movieid } = useParams()
-  const moviedetails = {
-    _id: "65101a2acc5b257e6f2816a5",
-    title: "Kesari Chapter 2: The Untold Story of Jallianwala Bagh",
-    description:
-      "A high-octane action thriller that outlines the emotional journey of a man who is set to rectify the wrongs in society.",
-    portraitImgUrl:
-      "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/kesari-chapter-2-the-untold-story-of-jallianwala-bagh-et00439158-1744618984.jpg",
-    landscapeImgUrl:
-      "https://assets-in.bmscdn.com/iedb/movies/images/mobile/listing/xxlarge/kesari-chapter-2-the-untold-story-of-jallianwala-bagh-et00439158-1744618984.jpg",
-    rating: 8,
-    genre: ["Action", "Thriller"],
-    duration: 130,
-    cast: [],
-    crew: [],
-    __v: 0,
-  };
+  const movieId = pathname.split("/")[3]
+  const [moviedetails, setmoviedetails] = useState<any>(null);
+  // const moviedetails = {
+  //   _id: "65101a2acc5b257e6f2816a5",
+  //   title: "Kesari Chapter 2: The Untold Story of Jallianwala Bagh",
+  //   description:
+  //     "A high-octane action thriller that outlines the emotional journey of a man who is set to rectify the wrongs in society.",
+  //   portraitImgUrl:
+  //     "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/kesari-chapter-2-the-untold-story-of-jallianwala-bagh-et00439158-1744618984.jpg",
+  //   landscapeImgUrl:
+  //     "https://assets-in.bmscdn.com/iedb/movies/images/mobile/listing/xxlarge/kesari-chapter-2-the-untold-story-of-jallianwala-bagh-et00439158-1744618984.jpg",
+  //   rating: 8,
+  //   genre: ["Action", "Thriller"],
+  //   duration: 130,
+  //   cast: [],
+  //   crew: [],
+  //   __v: 0,
+  // };
+  const getmoviedetails = async () => { 
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/movie/movies/${movieId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+    if (!response.ok) {
+      console.error("Failed to fetch movies");
+      return [];
+    }
+    const data = await response.json();
+    return data
+  }
+  React.useEffect(() => {
+    getmoviedetails().then((data) => {
+      console.log("Movie details fetched successfully:", data);
+      setmoviedetails(data.data);
+    });
+  }, []);
+  if (!moviedetails) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <p className="text-lg font-semibold">Loading movie details...</p>
+      </div>
+    );
+  }
   return (
     <div>
       
@@ -37,7 +65,7 @@ function moviecard() {
             <img
               src={moviedetails.portraitImgUrl}
               alt="image"
-              className="border-0 rounded-2xl"
+               className="border-0 rounded-2xl w-full h-auto max-w-[250px] object-cover"
             />
           </div>
           <div className="moviedetails flex flex-col gap-5 w-[50%] pt-7 max-[900px]:pt-0 max-[900px]:w-[100%] max-[900px]:gap-3">
@@ -54,7 +82,7 @@ function moviecard() {
             <div className="duration flex gap-2 max-[900px]:gap-1">
               <p>{moviedetails.duration} min</p>
               <p>
-                {moviedetails.genre[0]}/{moviedetails.genre[1]}
+                {moviedetails.genre.join("/")}
               </p>
             </div>
             <div className="bookticket bg-rose-500 w-[20%] p-2 border-0 cursor-pointer rounded-[5px] font-bold text-center max-[900px]:w-[100%]">
@@ -67,10 +95,7 @@ function moviecard() {
         <div className="desc m-5 ml-15 w-[60%] max-[900px]:ml-10 max-[900px]:w-[80%]">
           <h1 className="font-bold text-2xl">About the movie</h1>
           <p className="mt-3">
-            Inspired by the annals of history, this is the riveting tale of
-            Sankaran Nair, a fearless and charismatic barrister who waged an
-            epic legal battle against the mighty British Empire, exposing to the
-            world the brutal truth behind the Jallianwala Bagh Massacre.
+          {moviedetails.description}
           </p>
         </div>
         <hr className="w-[70%] ml-15 opacity-40 max-[900px]:ml-10 max-[900px]:w-[80%]" />

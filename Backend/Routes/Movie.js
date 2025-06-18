@@ -26,8 +26,8 @@ router.get('/test',async (req,res)=>{
 })
 router.post('/createmovie',adminTokenHandler,async(req,res,next)=>{
     try{
-        const {title,description,portraitImgUrl,landscapeImgUrl,genre,duration}=req.body;
-        const newMovie=new Movie({title,description,portraitImgUrl,landscapeImgUrl,genre,duration});
+        const {title,description,portraitImgUrl,landscapeImgUrl,rating,genre,duration}=req.body;
+        const newMovie=new Movie({title,description,portraitImgUrl,landscapeImgUrl,rating,genre,duration});
         await newMovie.save();
         return res.status(200).json(createResponse(true,'movie created successfully'))
     }

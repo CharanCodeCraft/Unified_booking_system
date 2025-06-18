@@ -58,6 +58,7 @@ const CreateMoviePage = () => {
     try {
       const formData = new FormData();
       formData.append("myimage", image);
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_API}/image/uploadimage`,
         {
@@ -97,165 +98,196 @@ const CreateMoviePage = () => {
       let portraitImgUrl = movie.portraitImgUrl;
       let landscapeImgUrl = movie.landscapeImgUrl;
 
-      if (movie.portraitImg) {
-        portraitImgUrl = await uploadImage(movie.portraitImg);
-        if (!portraitImgUrl) {
-          toast.error("Portrait Image upload failed", {
-            position: "top-center",
-          });
-          return;
+      // Create a promise to wrap all async actions
+      const createMoviePromise = async () => {
+        // Upload portrait image if present
+        if (movie.portraitImg) {
+          portraitImgUrl = await uploadImage(movie.portraitImg);
+          if (!portraitImgUrl) {
+            throw new Error("Portrait Image upload failed");
+          }
         }
-      }
-      if (movie.landscapeImg) {
-        landscapeImgUrl = await uploadImage(movie.landscapeImg);
-        if (!landscapeImgUrl) {
-          toast.error("Landscape Image upload failed", {
-            position: "top-center",
-          });
-          return;
+
+        // Upload landscape image if present
+        if (movie.landscapeImg) {
+          landscapeImgUrl = await uploadImage(movie.landscapeImg);
+          if (!landscapeImgUrl) {
+            throw new Error("Landscape Image upload failed");
+          }
         }
-      }
 
-      const newMovie = { ...movie, portraitImgUrl, landscapeImgUrl };
+        const newMovie = { ...movie, portraitImgUrl, landscapeImgUrl };
+        console.log("Creating movie with data:", newMovie);
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_API}/movie/createmovie`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newMovie),
-          credentials: "include",
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_API}/movie/createmovie`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newMovie),
+            credentials: "include",
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Movie creation failed");
         }
-      );
-
-      if (response.ok) {
+        setMovie({
+          title: "",
+          description: "",
+          portraitImgUrl: "",
+          portraitImg: null,
+          landscapeImgUrl: "",
+          landscapeImg: null,
+          rating: 0,
+          genre: [],
+          duration: 0,
+        });
         const data = await response.json();
         console.log("Movie creation successful", data);
+        return data;
+      };
 
-        toast.success("Movie Created Successfully", {
-          position: "top-center",
-        });
-      } else {
-        console.error("Movie creation failed", response.statusText);
-        toast.error("Movie Creation Failed", {
-          position: "top-center",
-        });
-      }
-    } catch (error) {
+      await toast.promise(createMoviePromise(), {
+        pending: "Creating movie...",
+        success: "Movie Created Successfully",
+        error: "Movie Creation Failed",
+      });
+    } catch (error: any) {
       console.error("An error occurred during movie creation", error);
+      toast.error(error.message || "Something went wrong", {
+        position: "top-center",
+      });
     }
   };
 
- return (
-  <div className="min-h-screen flex justify-center items-center bg-gray-100 p-4">
-    <div className="bg-white p-6 sm:p-8 rounded-xl shadow-md w-full max-w-2xl">
-      <h2 className="text-2xl sm:text-3xl font-bold text-red-500 text-center mb-6">Create Movie</h2>
+  return (
+    <div className="min-h-screen flex justify-center items-center bg-gray-100 p-4">
+      <div className="bg-white p-6 sm:p-8 rounded-xl shadow-md w-full max-w-2xl">
+        <h2 className="text-2xl sm:text-3xl font-bold text-red-500 text-center mb-6">
+          Create Movie
+        </h2>
 
-      <div className="mb-4">
-        <label className="block text-gray-700 font-semibold mb-2">Title</label>
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          value={movie.title}
-          onChange={handleInputChange}
-          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block text-gray-700 font-semibold mb-2">Description</label>
-        <input
-          type="text"
-          name="description"
-          placeholder="Description"
-          value={movie.description}
-          onChange={handleInputChange}
-          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block text-gray-700 font-semibold mb-2">Portrait Image</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            if (e.target.files?.[0]) {
-              setMovie({ ...movie, portraitImg: e.target.files[0] });
-            }
-          }}
-          className="w-full file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block text-gray-700 font-semibold mb-2">Landscape Image</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            if (e.target.files?.[0]) {
-              setMovie({ ...movie, landscapeImg: e.target.files[0] });
-            }
-          }}
-          className="w-full file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block text-gray-700 font-semibold mb-2">Rating</label>
-        <input
-          type="number"
-          name="rating"
-          placeholder="Rating"
-          value={movie.rating}
-          onChange={handleInputChange}
-          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
-        />
-      </div>
-
-      <div className="mb-4">
-        <p className="text-gray-700 font-semibold mb-2">Select Genres:</p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          {genres.map((genre) => (
-            <label key={genre} className="flex items-center gap-2 text-sm text-gray-600">
-              <input
-                type="checkbox"
-                name="genre"
-                checked={movie.genre.includes(genre)}
-                onChange={() => handleGenreChange(genre)}
-                className="accent-red-500"
-              />
-              {genre}
-            </label>
-          ))}
+        <div className="mb-4">
+          <label className="block text-gray-700 font-semibold mb-2">
+            Title
+          </label>
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            value={movie.title}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+          />
         </div>
-      </div>
 
-      <div className="mb-6">
-        <label className="block text-gray-700 font-semibold mb-2">Duration (in minutes)</label>
-        <input
-          type="number"
-          name="duration"
-          placeholder="Duration"
-          value={movie.duration}
-          onChange={handleInputChange}
-          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
-        />
-      </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-semibold mb-2">
+            Description
+          </label>
+          <input
+            type="text"
+            name="description"
+            placeholder="Description"
+            value={movie.description}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+          />
+        </div>
 
-      <button
-        onClick={handleCreateMovie}
-        className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md transition duration-300"
-      >
-        Create Movie
-      </button>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-semibold mb-2">
+            Portrait Image
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              if (e.target.files?.[0]) {
+                setMovie({ ...movie, portraitImg: e.target.files[0] });
+              }
+            }}
+            className="w-full file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700 font-semibold mb-2">
+            Landscape Image
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              if (e.target.files?.[0]) {
+                setMovie({ ...movie, landscapeImg: e.target.files[0] });
+              }
+            }}
+            className="w-full file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700 font-semibold mb-2">
+            Rating
+          </label>
+          <input
+            type="number"
+            name="rating"
+            placeholder="Rating"
+            value={movie.rating}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+          />
+        </div>
+
+        <div className="mb-4">
+          <p className="text-gray-700 font-semibold mb-2">Select Genres:</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {genres.map((genre) => (
+              <label
+                key={genre}
+                className="flex items-center gap-2 text-sm text-gray-600"
+              >
+                <input
+                  type="checkbox"
+                  name="genre"
+                  checked={movie.genre.includes(genre)}
+                  onChange={() => handleGenreChange(genre)}
+                  className="accent-red-500"
+                />
+                {genre}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-gray-700 font-semibold mb-2">
+            Duration (in minutes)
+          </label>
+          <input
+            type="number"
+            name="duration"
+            placeholder="Duration"
+            value={movie.duration}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+          />
+        </div>
+
+        <button
+          onClick={handleCreateMovie}
+          className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md transition duration-300"
+        >
+          Create Movie
+        </button>
+      </div>
     </div>
-  </div>
-);
-}
+  );
+};
 
 export default CreateMoviePage;

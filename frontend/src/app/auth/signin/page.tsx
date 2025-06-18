@@ -50,17 +50,18 @@ const Signin = () => {
             return;
         }
         console.log(formData)
-        const response = await fetch('http://localhost:8000/auth/login', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/auth/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
+                    credentials: 'include',
                     body: JSON.stringify(formData),
                 });
                 const data = await response.json();
                 console.log(data.ok)
                 if(data.ok){
-                  router.push('/');
+                    window.location.href = '/';
                     toast.success(data.message);
                 }
     }

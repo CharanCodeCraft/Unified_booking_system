@@ -19,7 +19,7 @@ function checkauthtoken(req,res,next){
                     })
                 }
                 else{
-                    const newauthtoken= jwt.sign({userid:refdecoded.userid},process.env.JWT_SECRET_KEY,{expiresIn:'10m'});
+                    const newauthtoken= jwt.sign({userid:refdecoded.userid},process.env.JWT_SECRET_KEY,{expiresIn:'1d'});
                     const newrefreshtoken= jwt.sign({userid:refdecoded.userid},process.env.JWT_REFRESH_SECRET_KEY,{expiresIn:'1d'});
                     res.cookie('authtoken',newauthtoken,{httpOnly:true});
                     res.cookie('refreshtoken',newrefreshtoken,{httpOnly:true});

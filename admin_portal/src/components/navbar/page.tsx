@@ -167,6 +167,13 @@ const Navbar = () => {
                 >
                   Add Celeb
                 </Link>
+                <Link
+                href="/auth/signin"
+                onClick={handlelogut}
+                className="theme_btn1 linkstylenone no-underline text-white font-bold bg-[#f84464] text-xs h-[25px] leading-[25px] w-[87px] text-center rounded border border-[#f84464] block items-center justify-center"
+              >
+                Logut
+              </Link>
               </>
             ) : (
               <>

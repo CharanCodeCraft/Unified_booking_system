@@ -32,7 +32,7 @@ router.post('/login',async(req,res,next)=>{
         if(!isMatch){
             return res.status(400).json(createres(false,'invalid credentials'))
         }
-        const adminauthtoken= jwt.sign({userid:user._id},process.env.JWT_ADMIN_SECRET_KEY,{expiresIn:'10m'});
+        const adminauthtoken= jwt.sign({userid:user._id},process.env.JWT_ADMIN_SECRET_KEY,{expiresIn:'1d'});
         res.cookie('adminauthtoken',adminauthtoken,{httpOnly:true});
         return res.status(200).json(createres(true,'user logged in successfully',{adminauthtoken}))
     }

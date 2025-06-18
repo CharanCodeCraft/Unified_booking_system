@@ -61,7 +61,7 @@ const Signin = () => {
 
         // Delay a little to show toast
         setTimeout(() => {
-          router.push("/pages/movie/createmovie");
+          window.location.href="/pages/createmovie"
         }, 1500);
       } else {
         toast.error(data.message || "Admin Login Failed", {

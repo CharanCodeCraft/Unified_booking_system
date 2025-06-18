@@ -15,12 +15,12 @@ router.get('/test',(req,res)=>{
 
 router.post('/register',async(req,res,next)=>{
     try{
-        const {name,email,password}=req.body;
+        const {name,email,password,confirmpassword,city}=req.body;
         const user=await User.findOne({email});
         if(user){
             return res.status(400).json(createres(false,'user already exists'))
         }
-        const newUser=new User({name,email,password});
+        const newUser=new User({name,email,password,city});
         await newUser.save();
         return res.status(200).json(createres(true,'user registered successfully'))
     }
@@ -40,7 +40,7 @@ router.post('/login',async(req,res,next)=>{
         if(!isMatch){
             return res.status(400).json(createres(false,'invalid credentials'))
         }
-        const authtoken= jwt.sign({userid:user._id},process.env.JWT_SECRET_KEY,{expiresIn:'10m'});
+        const authtoken= jwt.sign({userid:user._id},process.env.JWT_SECRET_KEY,{expiresIn:'1d'});
         const refreshtoken= jwt.sign({userid:user._id},process.env.JWT_REFRESH_SECRET_KEY,{expiresIn:'1d'});
         res.cookie('authtoken',authtoken,{httpOnly:true});
         res.cookie('refreshtoken',refreshtoken,{httpOnly:true});
@@ -53,6 +53,11 @@ router.post('/login',async(req,res,next)=>{
         next(err)
     }
 })
+router.get('/logout',async(req,res)=>{
+    res.clearCookie('authtoken');
+    res.clearCookie('refreshtoken');
+    return res.status(200).json(createres(true,'user logged out successfully'))
+})
 router.get('/checklogin',authhandler,async(req,res)=>{
     res.json({
         userid:req.userid,
@@ -60,7 +65,32 @@ router.get('/checklogin',authhandler,async(req,res)=>{
         message:'user is logged in'
     })
 })
-
+router.get('/getuser',authhandler,async(req,res)=>{
+    const user=await User.findById(req.userid);
+    
+    if(!user){
+        return res.status(404).json(createres(false,'user not found'))
+    }
+    else{
+        return res.status(200).json(createres(true,'user fetched successfully',user))
+    }
+})
+router.post('/changecity',authhandler,async(req,res,next)=>{
+    try{
+        console.log(req.body);
+        const {city}=req.body;
+        const user=await User.findById(req.userid);
+        if(!user){
+            return res.status(404).json(createres(false,'user not found'))
+        }
+        user.city=city;
+        await user.save();
+        return res.status(200).json(createres(true,'city changed successfully'))
+    }
+    catch(err){
+        next(err)
+    }
+})
 function createres(ok,message,data){
     return {
         ok,

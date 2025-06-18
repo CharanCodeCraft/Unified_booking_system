@@ -67,12 +67,13 @@ const Signup = () => {
         const jsondata = JSON.stringify(cleanData);
         console.log(jsondata)
         //send form data to backend
-        const response = await fetch('http://localhost:8000/auth/register', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: jsondata,
+            credentials: 'include',
+            body: JSON.stringify(formData),
         });
         const data = await response.json();
         console.log(data.ok)
@@ -153,7 +154,7 @@ const Signup = () => {
             />
             {errors.confirmPassword && <span className="formerror">{errors.confirmPassword}</span>}
           </div>
-          {/*<div className="forminput_cont flex flex-col my-2 gap-2 w-full relative">
+          <div className="forminput_cont flex flex-col my-2 gap-2 w-full relative">
             <label className="font-semibold">City</label>
             <input
               type="text"
@@ -164,7 +165,7 @@ const Signup = () => {
               className="bg-white p-2 text-sm w-full border border-gray-500"
             />
             {errors.city && <span className="formerror">{errors.city}</span>}
-          </div>*/}
+          </div>
 
           <button type="submit" className="main_button bg-red-500 text-col1 font-semibold py-2 px-8 text-center no-underline w-fit self-center m-2">
             Register
