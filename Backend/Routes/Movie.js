@@ -181,9 +181,10 @@ router.get('/movies/:id', async (req, res, next) => {
         next(err);
     }
 })
-router.get('/screensbycity',async(req,res,next)=>{
+router.get('/screensbycity/:city',async(req,res,next)=>{
     try {
-        const city=req.body.city;
+        const city=req.params.city;
+        console.log(city);
         const screens=await Screen.find({city});
         if(!screens || screens.length===0){
             return res.status(404).json(createResponse(false,'screens not found'))

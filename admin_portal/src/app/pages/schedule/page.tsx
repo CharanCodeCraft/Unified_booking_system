@@ -32,6 +32,30 @@ interface Movie {
   duration: number;
 }
 
+const cities = [
+  "Jabalpur",
+  "Mumbai",
+  "Delhi",
+  "Bangalore",
+  "Hyderabad",
+  "Chennai",
+  "Kolkata",
+  "Pune",
+  "Ahmedabad",
+  "Jaipur",
+  "Surat",
+  "Lucknow",
+  "Kanpur",
+  "Nagpur",
+  "Indore",
+  "Thane",
+  "Bhopal",
+  "Visakhapatnam",
+  "Pimpri-Chinchwad",
+  "Patna",
+  "Vadodara",
+];
+
 const Page = () => {
   const [schedule, setSchedule] = React.useState<schedule>({
     screenId: "",
@@ -56,14 +80,26 @@ const Page = () => {
     getMovies();
   }, []);
 
-  const getScreensByCity = async () => {
-    if (city === "") return toast.error("Please select a city");
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}/movie/screensbycity/${city.toLowerCase()}`
-    );
-    const data = await res.json();
-    setScreens(data.data);
+  const getScreensByCity = async (selectedCity: string) => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_API}/movie/screensbycity/${selectedCity}`
+      );
+      const data = await res.json();
+  
+      if (!Array.isArray(data.data) || data.data.length === 0) {
+        setScreens([]);
+        toast.error("No screens found for the selected city");
+      } else {
+        setScreens(data.data);
+      }
+    } catch (error) {
+      toast.error("Failed to fetch screens");
+      setScreens([]);
+      console.error(error);
+    }
   };
+  
 
   const createSchedule = async () => {
     if (
@@ -101,27 +137,37 @@ const Page = () => {
       <ToastContainer />
       <div className="w-full max-w-3xl bg-white p-6 rounded-lg shadow-md">
         {/* City Search */}
-        <div className="flex gap-4 mb-6">
-          <input
-            type="text"
+        <div className="flex gap-4 mb-6 flex-col sm:flex-row">
+          <select
             name="city"
             id="city"
-            placeholder="Enter City"
             value={city}
-            onChange={(e) => setCity(e.target.value)}
-            className="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400"
-          />
-          <button
+            onChange={(e) => {
+              const selectedCity = e.target.value;
+              setCity(selectedCity);
+              if (selectedCity) getScreensByCity(selectedCity); // auto fetch
+            }}
+            className="flex-1 border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-red-400"
+          >
+            <option value="">Select City</option>
+            {cities.map((cityName) => (
+              <option key={cityName} value={cityName}>
+                {cityName}
+              </option>
+            ))}
+          </select>
+          {/* <button
             onClick={getScreensByCity}
             className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded"
           >
             Search
-          </button>
+          </button> */}
         </div>
 
         {/* Screens */}
         <div className="mb-6">
           <h2 className="text-xl font-semibold mb-2">Select a Screen</h2>
+          {screens.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {screens.map((screen) => (
               <div
@@ -136,15 +182,21 @@ const Page = () => {
                 }
               >
                 <p className="font-bold">{screen.name}</p>
-                <p>{screen.location}, {screen.city}</p>
+                <p>
+                  {screen.location}, {screen.city}
+                </p>
                 <p className="text-sm text-gray-500">{screen.screenType}</p>
               </div>
             ))}
           </div>
+          ) : (
+            <p className="text-center text-gray-500">No screens available Or look for other cities.</p>
+          )}
         </div>
 
         {/* Movies */}
-        <div className="mb-6">\          <h2 className="text-xl font-semibold mb-2">Select a Movie</h2>
+        <div className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Select a Movie</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {movies.map((movie) => (
               <div
@@ -154,9 +206,7 @@ const Page = () => {
                     ? "bg-red-100 border-red-500"
                     : "hover:bg-gray-50"
                 }`}
-                onClick={() =>
-                  setSchedule({ ...schedule, movieId: movie._id })
-                }
+                onClick={() => setSchedule({ ...schedule, movieId: movie._id })}
               >
                 <p className="font-bold">{movie.title}</p>
                 <p className="text-sm text-gray-600">{movie.description}</p>
@@ -169,15 +219,22 @@ const Page = () => {
 
         {/* Time & Date */}
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
-          <input
-            type="time"
+          <select
             name="showTime"
             id="showTime"
+            value={schedule.showTime}
             onChange={(e) =>
               setSchedule({ ...schedule, showTime: e.target.value })
             }
-            className="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400"
-          />
+            className="flex-1 border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-red-400"
+          >
+            <option value="">Select Show Time</option>
+            <option value="10:00AM">10:00AM</option>
+            <option value="1:00AM">1:00AM</option>
+            <option value="4:00AM">4:00AM</option>
+            <option value="7:00AM">7:00AM</option>
+          </select>
+
           <input
             type="date"
             name="showDate"
