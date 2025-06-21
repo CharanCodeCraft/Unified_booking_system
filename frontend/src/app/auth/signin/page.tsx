@@ -4,10 +4,10 @@ import Image from 'next/image';
 import styles from './page.module.css';
 import Navbar from '@/components/Navbar/Navbar';
 import Link from 'next/link';
-import { toast } from 'react-toastify';
+import { toast,ToastContainer } from 'react-toastify';
 import logo from '@/assets/final-logo.jpg';
 import { useRouter } from 'next/navigation';
-
+import "react-toastify/dist/ReactToastify.css";
 
 interface FormData {
     email: string;
@@ -37,19 +37,14 @@ const Signin = () => {
         //prevent default form submission
         e.preventDefault();
 
-        const validationErrors: Record<string, string> = {};
-        if (!formData.email) {
-            validationErrors.email = 'Email is required';
-        }
-        if (!formData.password) {
-            validationErrors.password = 'Password is required';
-        }
-
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
+        if (!formData.email || !formData.password) {
+          toast.error("Email and password are required", {
+            position: "top-center",
+          });
+          return;
         }
         console.log(formData)
+        try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/auth/login`, {
                     method: 'POST',
                     headers: {
@@ -62,13 +57,29 @@ const Signin = () => {
                 console.log(data.ok)
                 if(data.ok){
                     window.location.href = '/';
-                    toast.success(data.message);
+                    toast.success("Login Successful", {
+                      position: "top-center",
+                    });
+                    setTimeout(() => {
+                      window.location.href="/pages/createmovie"
+                    }, 1500);
                 }
-    }
+                else {
+                  toast.error(data.message || "Login Failed", {
+                    position: "top-center",
+                  });
+                }
+    }  catch (error) {
+      console.error("Error during login:", error);
+      toast.error("Something went wrong", {
+        position: "top-center",
+      });
+    }}
 
   return (
     
     <div className="authout flex justify-center items-center">
+      <ToastContainer />
     <div className="authin flex flex-col md:flex-row w-full max-w-[900px] min-h-[400px] mx-auto shadow-xl bg-white mt-12 rounded-lg overflow-hidden max-[900px]:mt-0 max-[900px]:shadow-none">
       <div className="left w-full md:w-[40%] bg-black overflow-hidden flex justify-center items-center bg-cover bg-center bg-no-repeat rounded-md max-[900px]:hidden">
         <Image src={logo} alt="Logo" className="img w-full h-full" />

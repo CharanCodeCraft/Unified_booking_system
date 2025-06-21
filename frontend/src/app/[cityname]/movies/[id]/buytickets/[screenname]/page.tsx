@@ -3,1430 +3,309 @@ import React, { useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar/Navbar";
-function page() {
-  const movie = {
-    moviename: "Kesari Chapter 2: The Untold Story of Jallianwala Bagh",
-    screen: "4Dx",
-    date: new Date(),
-    language: "Hindi",
-    type: "Action/Thriller",
-    screens: [
-      {
-        name: "Screen 1",
-        location: "PVR Cinemas, Forum Mall, Koramangala",
-      },
-      {
-        name: "Screen 2",
-        location: "PVR Cinemas, Forum Mall, Koramangala",
-      },
-      {
-        name: "Screen 3",
-        location: "PVR Cinemas, Forum Mall, Koramangala",
-      },
-    ],
-  };
-  const screendetails = {
-    name: "Screen 1",
-    location: "PVR Cinemas, Forum Mall, Koramangala",
-    timeslots: [
-      {
-        time: "10:00 AM",
-        seats: [
-          {
-            type: "Platinum",
-            price: "500",
-            row: [
-              {
-                rowname: "A",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "not available" },
-                      { number: "6", status: "not available" },
-                      { number: "7", status: "not available" },
-                      { number: "8", status: "not available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "B",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "not available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "not available" },
-                      { number: "8", status: "not available" },
-                      { number: "9", status: "not available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "not available" },
-                      { number: "6", status: "not available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "C",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "not available" },
-                      { number: "2", status: "not available" },
-                      { number: "3", status: "not available" },
-                      { number: "4", status: "not available" },
-                      { number: "5", status: "not available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "not available" },
-                      { number: "8", status: "not available" },
-                      { number: "9", status: "not available" },
-                      { number: "10", status: "not available" }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            type: "Gold",
-            price: "300",
-            row: [
-              {
-                rowname: "D",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "not available" },
-                      { number: "2", status: "not available" },
-                      { number: "3", status: "not available" },
-                      { number: "4", status: "not available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "not available" },
-                      { number: "5", status: "not available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "E",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "not available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "not available" },
-                      { number: "9", status: "not available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "F",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            type: "Silver",
-            price: "150",
-            row: [
-              {
-                rowname: "G",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "I",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "J",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-      },
-      {
-        time: "12:00 AM",
-        seats: [
-          {
-            type: "Platinum",
-            price: "500",
-            row: [
-              {
-                rowname: "A",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "B",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "C",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            type: "Gold",
-            price: "300",
-            row: [
-              {
-                rowname: "D",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "E",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "F",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            type: "Silver",
-            price: "150",
-            row: [
-              {
-                rowname: "G",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "H",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "I",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-      },
-      {
-        time: "3:00 AM",
-        seats: [
-          {
-            type: "Platinum",
-            price: "500",
-            row: [
-              {
-                rowname: "A",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "B",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "C",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            type: "Gold",
-            price: "300",
-            row: [
-              {
-                rowname: "A",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "B",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "C",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            type: "Silver",
-            price: "150",
-            row: [
-              {
-                rowname: "A",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "B",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "C",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-      },
-      {
-        time: "5:00 AM",
-        seats: [
-          {
-            type: "Platinum",
-            price: "500",
-            row: [
-              {
-                rowname: "A",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "B",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "C",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            type: "Gold",
-            price: "300",
-            row: [
-              {
-                rowname: "A",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "B",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "C",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            type: "Silver",
-            price: "150",
-            row: [
-              {
-                rowname: "A",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "B",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              },
-              {
-                rowname: "C",
-                cols: [
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  },
-                  {
-                    seats: [
-                      { number: "1", status: "available" },
-                      { number: "2", status: "available" },
-                      { number: "3", status: "available" },
-                      { number: "4", status: "available" },
-                      { number: "5", status: "available" },
-                      { number: "6", status: "available" },
-                      { number: "7", status: "available" },
-                      { number: "8", status: "available" },
-                      { number: "9", status: "available" },
-                      { number: "10", status: "available" }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-      },
-    ],
-  };
-  const [selectedtime, setselectedtime] = useState(screendetails.timeslots[0].time);
-  // const [selectedseat, setselectedseat] = useState<any[]>([]);
-  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+import { useParams, usePathname, useSearchParams } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-  const handleSeatClick = (rowname: string, colIndex: number, seatNumber: string) => {
-    const seatId = `${rowname}-${colIndex}-${seatNumber}`;
-    setSelectedSeats((prev) =>
-      prev.includes(seatId) ? prev.filter((s) => s !== seatId) : [...prev, seatId]
+function page() {
+  const [selectedtime, setselectedtime] = useState<any>(null);
+  const [selectedSeats, setSelectedSeats] = useState<any[]>([]);
+  const [screen, setScreen] = useState<any>({});
+  const [movie, setMovie] = useState<any>({});
+  const [loading, setLoading] = useState(true);
+  const pathname = usePathname(); // Example: /Bangalore/movies/6852a5f8af931ed8e3289d4a/buytickets/68544e19cf9a46db82ba39f1
+  const parentPath = "/" + pathname.split("/").slice(1, 5).join("/");
+  const { cityname, id, screenname } = useParams();
+  const searchparams = useSearchParams();
+  const date = searchparams.get("date");
+  console.log("date", date);
+
+  const getmoviedetails = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/movie/movies/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
     );
+    const data = await response.json();
+    return data;
   };
-  function generateseatlayout() {
-    const index = screendetails.timeslots.findIndex(
-      (time: any) => time.time === selectedtime
-    )
-    // console.log(selectedseat)
-    return(
+
+  const getschedules = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/movie/schedules/${screenname}/${date}/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    console.log("Schedules fetched successfully:", data);
+    setScreen(data.data);
+    setselectedtime(data.data.movieschedulefordate[0]);
+  };
+
+  const handleSeatClick = (seat: {
+    seat_id: string;
+    row: string;
+    col: number;
+    price: number;
+  }) => {
+    setSelectedSeats((prev) => {
+      const exists = prev.some(
+        (s) =>
+          s.seat_id === seat.seat_id &&
+          s.row === seat.row &&
+          s.col === seat.col &&
+          s.price === seat.price
+      );
+
+      if (exists) {
+        return prev.filter(
+          (s) =>
+            !(
+              s.seat_id === seat.seat_id &&
+              s.row === seat.row &&
+              s.col === seat.col &&
+              s.price === seat.price
+            )
+        );
+      } else {
+        return [...prev, seat];
+      }
+    });
+  };
+
+  const generateLayout = () => {
+    if (!screen?.screen?.seats) return null;
+
+    const seats = screen.screen.seats;
+    const index = screen.movieschedulefordate?.findIndex(
+      (schedule: any) => schedule.showTime === selectedtime?.showTime
+    );
+
+    const notAvailableSeats =
+      screen.movieschedulefordate[index]?.notAvailableSeats || [];
+
+    return (
       <div className="layout w-[60%] m-auto max-[900px]:m-0">
-        {screendetails.timeslots[index].seats.map((seat: any) => {
-          return (
-            <div className="seat flex flex-col gap-5 p-5" >
-              <h1>{seat.type} - {seat.price}</h1>
-              <div className="rows flex flex-col gap-3">
-                {seat.row.map((row: any) => {
-                 return(
-                  <div className="row flex items-center gap-2">
+        {seats.map((type: any) => (
+          <div key={type.type} className="seat flex flex-col gap-5 p-5">
+            <h1 className="text-xl font-semibold">
+              {type.type} - ₹{type.price}
+            </h1>
+
+            <div className="rows flex flex-col gap-3">
+              {type.rows.map((row: any) => (
+                <div key={row.rowname} className="row flex items-center gap-2">
                   <h1 className="text-[18px]">{row.rowname}</h1>
+
                   <div className="rownumbers flex gap-14 items-center">
-                    {row.cols.map((col: any,colIndex: number) => {
-                      return(
-                       <div className="col flex gap-2">
-                         {col.seats.map((seatObj: any) => {
-                        const seatId = `${row.rowname}-${colIndex}-${seatObj.number}`;
-                        const isSelected = selectedSeats.includes(seatId);
-                        const isAvailable = seatObj.status === "available";
-                        return (
-                          <div
-                            key={seatId}
-                            onClick={() =>
-                              isAvailable && handleSeatClick(row.rowname, colIndex, seatObj.number)
-                            }
-                            className={`seat border w-[30px] h-[30px] flex items-center justify-center text-sm cursor-pointer
-                              ${
-                                isAvailable
-                                  ? isSelected
+                    {row.cols.map((col: any, colIndex: number) => (
+                      <div key={colIndex} className="col flex gap-2">
+                        {col.seats.map((seat: any, seatIndex: number) => {
+                          const seatData = {
+                            seat_id: seat.seat_id,
+                            row: row.rowname,
+                            col: colIndex,
+                            price: type.price,
+                          };
+
+                          const isBooked = notAvailableSeats.some(
+                            (s: any) =>
+                              s.seat_id === seat.seat_id &&
+                              s.row === row.rowname &&
+                              s.col === colIndex &&
+                              s.price === type.price
+                          );
+
+                          const isSelected = selectedSeats.some(
+                            (s: any) =>
+                              s.seat_id === seat.seat_id &&
+                              s.row === row.rowname &&
+                              s.col === colIndex &&
+                              s.price === type.price
+                          );
+
+                          return (
+                            <div
+                              key={seatIndex}
+                              onClick={() => {
+                                if (!isBooked) handleSeatClick(seatData);
+                              }}
+                              className={`
+                                seat border w-[30px] h-[30px] flex items-center justify-center text-sm cursor-pointer
+                                ${
+                                  isBooked
+                                    ? "bg-gray-300 text-white cursor-not-allowed"
+                                    : isSelected
                                     ? "bg-green-500 text-white"
                                     : "bg-white text-green-700"
-                                  : "bg-gray-300 text-white cursor-not-allowed"
-                              }`}
-                          >
-                            {seatObj.number}
-                          </div>
-                        );
-                      })}
-                       </div>
-                      )
-                    })}
+                                }
+                              `}
+                            >
+                              {seat.seat_id}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ))}
                   </div>
                 </div>
-                 )
-                })}
-              </div>
+              ))}
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
-    )
-  }
+    );
+  };
+
+  const handleBooking = () => {
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/movie/bookticket`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        showTime: selectedtime.showTime,
+        showDate: date,
+        movieId: id,
+        screenId: screenname,
+        seats: selectedSeats,
+        totalPrice: selectedSeats.reduce((acc, seat) => acc + seat.price, 0),
+        paymentId: "123456789",
+        paymentType: "online",
+      }),
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        if (response.ok) {
+          toast.success("Booking Successful");
+        } else {
+          toast.error("Booking Failed");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  React.useEffect(() => {
+    setLoading(true);
+    Promise.all([getmoviedetails(), getschedules()])
+      .then(([movieData]) => {
+        setMovie(movieData.data);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <div>
-      <div className="na">
-        
-      </div>
-      <div className="detils gap-2 items-center m-6 flex">
-        <div className="icon">
-          <Link href={"/"}><ChevronLeft className=" cursor-pointer" /></Link>
+      <ToastContainer />
+      {loading ? (
+        <div className="flex justify-center items-center h-screen">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-500 border-solid"></div>
         </div>
-        <div className="mvdet">
-          <h1>{movie.moviename}</h1>
-          <h6 className="text-[14px] font-bold text-gray-600">
-            {movie.screens[0].name}:{movie.screens[0].location}
-          </h6>
-        </div>
-      </div>
-      <div className="screendet" >
-        <div
-          className="timeslots w-[100%] p-4 flex gap-3"
-          style={{ backgroundColor: "#F5F5FA" }}
-        >
-          {screendetails.timeslots.map((time: any) => {
-            return (
-              <div className="timeslot w-[10%] max-[900px]:w-[30%] p-2 text-center border-1 border-green bg-white text-green-600" style={{ backgroundColor: selectedtime === time.time ? "green" : "white",color: selectedtime === time.time ? "white" : "green"}}>
-                <button className="cursor-pointer" onClick={() => setselectedtime(time.time)} >{time.time}</button>
+      ) : (
+        <>
+          {screen && (
+            <div className="detils gap-2 items-center m-6 flex">
+              <div className="icon">
+                <Link href={parentPath}>
+                  <ChevronLeft className=" cursor-pointer" />
+                </Link>
               </div>
-            );
-          })}
-        </div>
-        <div className="genseatslayout p-5 max-[900px]:overflow-x-scroll" style={{ backgroundColor: "#FAFAFA" }}>
-        <div className="indicators flex gap-4 justify-center  ">
-          <div className="not-ava flex items-center gap-2">
-            <div className="box w-3 h-3" style={{ backgroundColor: "#D1D5DC" }}></div>
-            <h1>Not Available</h1>
+              <div className="mvdet">
+                <h1>{movie.title}</h1>
+                <h6 className="text-[14px] font-bold text-gray-600">
+                  {screen.screen?.name}:{screen.screen?.location}
+                </h6>
+              </div>
+            </div>
+          )}
+
+          <div className="screendet">
+            <div
+              className="timeslots w-[100%] p-4 flex gap-3"
+              style={{ backgroundColor: "#F5F5FA" }}
+            >
+              {screen.movieschedulefordate?.map((schedule: any) => {
+                return (
+                  <div
+                    key={schedule._id}
+                    className="timeslot w-[10%] max-[900px]:w-[30%] p-2 text-center border-1 border-green bg-white text-green-600"
+                    style={{
+                      backgroundColor:
+                        selectedtime === schedule ? "green" : "white",
+                      color: selectedtime === schedule ? "white" : "green",
+                    }}
+                  >
+                    <button
+                      className="cursor-pointer"
+                      onClick={() => {
+                        setselectedtime(schedule);
+                        setSelectedSeats([]);
+                      }}
+                    >
+                      {schedule.showTime}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div
+              className="genseatslayout p-5 max-[900px]:overflow-x-scroll"
+              style={{ backgroundColor: "#FAFAFA" }}
+            >
+              <div className="indicators flex gap-4 justify-center">
+                <div className="not-ava flex items-center gap-2">
+                  <div
+                    className="box w-3 h-3"
+                    style={{ backgroundColor: "#D1D5DC" }}
+                  ></div>
+                  <h1>Not Available</h1>
+                </div>
+                <div className="not-ava flex items-center gap-2">
+                  <div className="box w-3 h-3 border border-green-500"></div>
+                  <h1>Available</h1>
+                </div>
+                <div className="not-ava flex items-center gap-2">
+                  <div className="box w-3 h-3 bg-green-500"></div>
+                  <h1>Selected</h1>
+                </div>
+              </div>
+              {generateLayout()}
+            </div>
+
+            <div className="btn flex justify-center gap-3 items-center p-5">
+              <div className="total flex gap-2">
+                <h2>Total</h2>
+                <h3 className="text-[#F84464]">
+                  Rs. {selectedSeats.reduce((acc, seat) => acc + seat.price, 0)}
+                </h3>
+              </div>
+              <div className="btn">
+                <Link
+                  className="bg-[#F84464] cursor-pointer text-white p-3"
+                  onClick={handleBooking}
+                  href={`/profile`}
+                >
+                  Book Now
+                </Link>
+              </div>
+            </div>
           </div>
-          <div className="not-ava flex items-center gap-2">
-            <div className="box w-3 h-3 border-1 border-green-500"></div>
-            <h1>Available</h1>
-          </div>
-          <div className="not-ava flex items-center gap-2">
-            <div className="box w-3 h-3 bg-green-500"></div>
-            <h1>Selected</h1>
-          </div>
-        </div>
-          {generateseatlayout()}
-        </div>
-      </div>
+        </>
+      )}
     </div>
-  ); 
+  );
 }
 
 export default page;

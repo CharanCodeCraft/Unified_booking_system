@@ -26,7 +26,7 @@ const Navbar=({ selectedCity, setShowLocationPopup }: { selectedCity: string, se
               }
             );
             const data = await response.json();
-            console.log(data);
+            
             if (data.ok) {
               setcheckloginflag(true);
             } else {
@@ -52,7 +52,7 @@ const Navbar=({ selectedCity, setShowLocationPopup }: { selectedCity: string, se
           );  
           const data = await response.json();
           setUser(data.data);
-          console.log(user);
+         
         } catch {
           console.log("error");
         }
@@ -70,7 +70,7 @@ const Navbar=({ selectedCity, setShowLocationPopup }: { selectedCity: string, se
             }
           );
           const data = await response.json();
-          console.log(data);
+          
           if (data.ok) {
             setcheckloginflag(false);
             router.push("/auth/signin");
@@ -84,7 +84,7 @@ const Navbar=({ selectedCity, setShowLocationPopup }: { selectedCity: string, se
     useEffect(() => {
       checklogin();
       getuser();
-    })
+    },[])
     
     return (
            <div>
