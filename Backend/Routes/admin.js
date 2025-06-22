@@ -8,7 +8,10 @@ const adminauthcheck=require('../Middlewares/adminmiddleware')
 require('dotenv').config()
 router.post('/register',async(req,res,next)=>{
     try{
-        const {name,email,password}=req.body;
+        const {name,email,password,code}=req.body;
+        if(code!==process.env.SECRET_CODE){
+            return res.status(400).json(createres(false,'invalid code'))
+        }
         const user=await Admin.findOne({email});
         if(user){
             return res.status(400).json(createres(false,'user already exists'))

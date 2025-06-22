@@ -14,6 +14,7 @@ interface FormData {
   email: string;
   password: string;
   confirmPassword: string;
+  code:string;
   city: string;
 }
 
@@ -25,6 +26,7 @@ const AdminSignup = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    code : '',
     city: '',
   });
 
@@ -130,6 +132,17 @@ const AdminSignup = () => {
                   type="password"
                   name="confirmPassword"
                   value={formData.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Confirm Your Password"
+                  className="bg-white p-2 text-sm w-full border border-gray-500"
+                />
+              </div>
+              <div className="forminput_cont flex flex-col my-2 gap-2 w-full">
+                <label className="font-semibold">code</label>
+                <input
+                  type="password"
+                  name="code"
+                  value={formData.code}
                   onChange={handleChange}
                   placeholder="Confirm Your Password"
                   className="bg-white p-2 text-sm w-full border border-gray-500"

@@ -122,13 +122,6 @@ const Signin = () => {
               >
                 Login
               </button>
-
-              <p className="authlink self-center my-2 text-gray-500">
-                Don&apos;t have an account?{" "}
-                <Link href="/auth/signup" className="text-red-500">
-                  Register
-                </Link>
-              </p>
             </form>
           </div>
         </div>
