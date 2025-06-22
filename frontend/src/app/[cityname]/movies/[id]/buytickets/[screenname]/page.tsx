@@ -6,6 +6,12 @@ import Navbar from "@/components/Navbar/Navbar";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Script from 'next/script';
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 function page() {
   const [selectedtime, setselectedtime] = useState<any>(null);
@@ -167,33 +173,143 @@ function page() {
     );
   };
 
-  const handleBooking = () => {
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/movie/bookticket`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({
-        showTime: selectedtime.showTime,
-        showDate: date,
-        movieId: id,
-        screenId: screenname,
-        seats: selectedSeats,
-        totalPrice: selectedSeats.reduce((acc, seat) => acc + seat.price, 0),
-        paymentId: "123456789",
-        paymentType: "online",
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
+  const handleBooking =async () => {
+    try{
+      let keyVal: string = "";
+      let orderVal: any = null;
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/payment/getkey`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }).then((res) => res.json()).then((data) => {
+          keyVal = data.key;
+          console.log("key:", data);
+      })
+      const resp= await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/payment/process`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          amount: selectedSeats.reduce((acc, seat) => acc + seat.price, 0),
+        })
+        }
+      ).then((res) => res.json()).then((response) => {
         if (response.ok) {
-          toast.success("Booking Successful");
+          orderVal = response.order;
+          console.log("order:", response);
         } else {
           toast.error("Booking Failed");
         }
       })
       .catch((err) => console.log(err));
+      console.log(keyVal)
+      console.log(orderVal)
+       // Open Razorpay Checkout
+       if(!keyVal || !orderVal){
+        return
+       }
+       const options = {
+        key: keyVal, // Replace with your Razorpay key_id
+        amount: orderVal.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        currency: 'INR',
+        name: 'Tictopia',
+        description: 'Test Transaction',
+        order_id: orderVal.id, // This is the order_id created in the backend
+        handler: async function (response: any) {
+          const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
+      
+          // ✅ Verify signature via backend (optional but recommended)
+          const verifyRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/payment/verify`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+              razorpay_payment_id,
+              razorpay_order_id,
+              razorpay_signature,
+            }),
+          });
+      
+          const verifyData = await verifyRes.json();
+          if (!verifyData.ok) {
+            toast.error("Payment verification failed");
+            return;
+          }
+      
+          // ✅ Now call your original /bookticket API with paymentId
+          const bookRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/movie/bookticket`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({
+              showTime: selectedtime.showTime,
+              showDate: date,
+              movieId: id,
+              screenId: screenname,
+              seats: selectedSeats,
+              totalPrice: selectedSeats.reduce((acc, seat) => acc + seat.price, 0),
+              paymentId: razorpay_payment_id,
+              paymentType: "online",
+            }),
+          });
+      
+          const result = await bookRes.json();
+          if (result.ok) {
+            window.location.href = "/profile";
+            toast.success("Booking Successful");
+          } else {
+            toast.error("Booking Failed");
+          }
+        },
+        prefill: {
+          name: 'charan',
+          email: 'charangowak911@gmail.com',
+          contact: '9999999999'
+        },
+        theme: {
+          color: '#F37254'
+        },
+      };
+      console.log(options);
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    }
+    catch(err){
+      console.log(err);
+    }
+
+    //  
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   credentials: "include",
+    //   body: JSON.stringify({
+    //     showTime: selectedtime.showTime,
+    //     showDate: date,
+    //     movieId: id,
+    //     screenId: screenname,
+    //     seats: selectedSeats,
+    //     totalPrice: selectedSeats.reduce((acc, seat) => acc + seat.price, 0),
+    //     paymentId: "123456789",
+    //     paymentType: "online",
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((response) => {
+    //     if (response.ok) {
+    //       toast.success("Booking Successful");
+    //     } else {
+    //       toast.error("Booking Failed");
+    //     }
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   React.useEffect(() => {
@@ -207,6 +323,10 @@ function page() {
 
   return (
     <div>
+      <Script
+  src="https://checkout.razorpay.com/v1/checkout.js"
+  strategy="afterInteractive"
+/>
       <ToastContainer />
       {loading ? (
         <div className="flex justify-center items-center h-screen">
@@ -292,13 +412,12 @@ function page() {
                 </h3>
               </div>
               <div className="btn">
-                <Link
+                <button
                   className="bg-[#F84464] cursor-pointer text-white p-3"
                   onClick={handleBooking}
-                  href={`/profile`}
                 >
                   Book Now
-                </Link>
+                </button>
               </div>
             </div>
           </div>

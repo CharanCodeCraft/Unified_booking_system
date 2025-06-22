@@ -8,12 +8,15 @@ require('dotenv').config()
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const Razorpay = require('razorpay');
 
 const authRouter = require('./Routes/Auth')
 const adminRouter = require('./Routes/admin')
 const movieRoutes = require('./Routes/Movie')
 const imageroute = require('./Routes/imageUploadRoutes')
+const paymentroute = require('./Routes/payment')
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const allowedOrigins = ['http://localhost:3000','http://localhost:3001']; // Add more origins as needed
 app.use(
@@ -34,10 +37,12 @@ app.use('/auth', authRouter)
 app.use('/admin', adminRouter)
 app.use('/movie', movieRoutes)
 app.use('/image', imageroute)
+app.use('/payment', paymentroute)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
