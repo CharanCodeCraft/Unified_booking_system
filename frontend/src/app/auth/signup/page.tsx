@@ -54,6 +54,11 @@ const Signup = () => {
       toast.error("Passwords do not match", { position: "top-center" });
       return;
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+if (!emailRegex.test(formData.email)) {
+  toast.error("Please enter a valid email address", { position: "top-center" });
+  return;
+}
     const { confirmPassword, city, ...cleanData } = formData;
     const jsondata = JSON.stringify(cleanData);
     console.log(jsondata);

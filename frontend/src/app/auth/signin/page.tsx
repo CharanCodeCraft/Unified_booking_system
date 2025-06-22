@@ -43,6 +43,11 @@ const Signin = () => {
           });
           return;
         }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+          toast.error("Please enter a valid email address", { position: "top-center" });
+          return;
+        }
         console.log(formData)
         try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/auth/login`, {

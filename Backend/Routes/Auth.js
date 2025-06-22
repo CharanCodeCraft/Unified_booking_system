@@ -42,8 +42,12 @@ router.post('/login',async(req,res,next)=>{
         }
         const authtoken= jwt.sign({userid:user._id},process.env.JWT_SECRET_KEY,{expiresIn:'1d'});
         const refreshtoken= jwt.sign({userid:user._id},process.env.JWT_REFRESH_SECRET_KEY,{expiresIn:'1d'});
-        res.cookie('authtoken',authtoken,{httpOnly:true});
-        res.cookie('refreshtoken',refreshtoken,{httpOnly:true});
+        res.cookie('authtoken',authtoken,{httpOnly: true,
+            secure: true,         // Required for cross-site cookies (in production)
+            sameSite: 'None',});
+        res.cookie('refreshtoken',refreshtoken,{httpOnly: true,
+            secure: true,         // Required for cross-site cookies (in production)
+            sameSite: 'None',});
         return res.status(200).json(createres(true,'user logged in successfully',{
             authtoken,
             refreshtoken

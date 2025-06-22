@@ -33,7 +33,9 @@ router.post('/login',async(req,res,next)=>{
             return res.status(400).json(createres(false,'invalid credentials'))
         }
         const adminauthtoken= jwt.sign({userid:user._id},process.env.JWT_ADMIN_SECRET_KEY,{expiresIn:'1d'});
-        res.cookie('adminauthtoken',adminauthtoken,{httpOnly:true});
+        res.cookie('adminauthtoken',adminauthtoken,{httpOnly: true,
+            secure: true,         // Required for cross-site cookies (in production)
+            sameSite: 'None',});
         return res.status(200).json(createres(true,'user logged in successfully',{adminauthtoken}))
     }
     catch(err){
