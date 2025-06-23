@@ -102,7 +102,7 @@ const Navbar=({ selectedCity, setShowLocationPopup }: { selectedCity: string, se
                     >
                         {user ? user.city : "Select City"}
                     <ChevronDown height={15} /></p>
-                    {checkloginflag && <button onClick={handlelogout} className="theme_btn1 linkstylenone no-underline text-white font-bold bg-[#f84464] text-xs h-[25px] leading-[25px] w-[67px] text-center rounded border border-[#f84464] block items-center justify-center">Logut</button>}
+                    {checkloginflag && <button onClick={handlelogout} className="theme_btn1 linkstylenone no-underline text-white font-bold bg-[#f84464] text-xs h-[25px] leading-[25px] w-[67px] text-center rounded border border-[#f84464] block items-center justify-center">Logout</button>}
                     {!checkloginflag && <Link href="/auth/signin" className="theme_btn1 linkstylenone no-underline text-white font-bold bg-[#f84464] text-xs h-[25px] leading-[25px] w-[67px] text-center rounded border border-[#f84464] block items-center justify-center">Login</Link>
                     }
                      {checkloginflag &&<Link href="/profile" className='linkstylenone'>
@@ -116,7 +116,7 @@ const Navbar=({ selectedCity, setShowLocationPopup }: { selectedCity: string, se
                 <div className="left flex  items-center gap-3">
                    
                     <div className="flex flex-col items-center gap-x-3">
-                    <Link href="/" className="text-lg font-bold justify-between items-center text-gray-800">Tictopia</Link>
+                    <Link href="/" className="text-lg font-bold justify-between items-center text-gray-800">Ticktopia</Link>
                     <p className="dropdown flex items-center cursor-pointer text-[10px] font-medium text-red-500 "
                          onClick={() => setShowLocationPopup(true)} >
                          {user ? user.city : "Select City"}
@@ -131,7 +131,7 @@ const Navbar=({ selectedCity, setShowLocationPopup }: { selectedCity: string, se
                 </div>
 
                 <div className="right flex items-center gap-3">
-                    {checkloginflag && <button onClick={handlelogout} className="bg-[#f84464] text-white text-xs font-bold py-1 px-3 rounded-md ">Logut</button>}
+                    {checkloginflag && <button onClick={handlelogout} className="bg-[#f84464] text-white text-xs font-bold py-1 px-3 rounded-md ">Logout</button>}
                     {!checkloginflag && <Link href="/auth/signin" className="bg-[#f84464] text-white text-xs font-bold py-1 px-3 rounded-md ">Login</Link>
                     }
                      {checkloginflag &&<Link href="/profile" className="text-gray-600">
