@@ -10,7 +10,8 @@ function screenslist() {
   const params = useParams();
   const { cityname, id } = params;
 
-  const [selectedDate, setSelectedDate] = React.useState<any>(new Date());
+  const [hasInteracted, setHasInteracted] = React.useState(false);
+  const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
   const [movie, setMovie] = React.useState<any>({});
   const [screens, setScreens] = React.useState<any>([]);
   const [loading, setLoading] = React.useState(true);
@@ -64,18 +65,23 @@ function screenslist() {
   }, []);
 
   React.useEffect(() => {
-    getscreens();
+    if (selectedDate) {
+      getscreens();
+    }
   }, [selectedDate]);
-
+  
+ 
+  console.log("current date", selectedDate,new Date());
   return (
-    <div>
+      <div className="flex flex-col min-h-screen">
+    <main className="flex-grow">
       {loading ? (
         <div className="flex justify-center items-center h-screen">
           <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-rose-500 border-solid"></div>
         </div>
       ) : (
         <>
-          <div className="screencontainer m-10">
+          <div className="screencontainer m-10 mb-0">
             <div className="moviedetails mb-5">
               <h1 className="text-3xl font-bold">{movie?.title}</h1>
             </div>
@@ -83,10 +89,14 @@ function screenslist() {
             <div className="dateshow mt-5 mb-5">
               <DatePicker
                 getSelectedDay={(date: any) => {
+                  if (!hasInteracted) {
+                    setHasInteracted(true);
+                    return;
+                  }
                   setSelectedDate(date);
-                }}
+                }}               
                 endDate={100}
-                selectDate={selectedDate}
+                selectDate={selectedDate || undefined}
                 labelFormat={"MMMM"}
                 color={"rgb(248, 68, 100)"}
               />
@@ -94,7 +104,17 @@ function screenslist() {
             <hr />
           </div>
 
-          {screens && screens.length > 0 ? (
+          {selectedDate === null?<div
+          className="screens mt-5 w-[100%] p-5"
+          style={{ backgroundColor: "#F5F5F5" }}
+        >
+          <div
+            className="screen1 font-bold m-auto p-3 flex justify-between items-center w-[90%] bg-white"
+            style={{ borderBottom: "2px solid #F5F5F5" }}
+          >
+            Select a date
+          </div>
+        </div>:screens && screens.length > 0 ? (
             <div
               className="screens mt-5 w-[100%] p-5"
               style={{ backgroundColor: "#F5F5F5" }}
@@ -135,6 +155,7 @@ function screenslist() {
           )}
         </>
       )}
+    </main>
     </div>
   );
 }

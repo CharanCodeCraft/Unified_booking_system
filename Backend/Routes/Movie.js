@@ -237,10 +237,15 @@ router.get('/screens/:city/:date/:movieid',async(req,res,next)=>{
         const screenSet = new Set();
         let temp=[]
         const screen=screens.forEach(screen=>screen.movieSchedules.forEach(schedule=>{
+            console.log(schedule.showDate,date);
             let scheduleDate=new Date(schedule.showDate);
             let userdate=new Date(date);
             console.log(scheduleDate,userdate);
-            if(scheduleDate.getUTCDate() === userdate.getUTCDate() &&
+            console.log(scheduleDate.getUTCDate(), userdate.getUTCDate()+1)
+            console.log( scheduleDate.getUTCMonth(), userdate.getUTCMonth())
+            console.log(scheduleDate.getUTCFullYear(), userdate.getUTCFullYear())
+            console.log(schedule.movieId,movieid);
+            if(scheduleDate.getUTCDate() === userdate.getUTCDate()+1 &&
             scheduleDate.getUTCMonth() === userdate.getUTCMonth() &&
             scheduleDate.getUTCFullYear() === userdate.getUTCFullYear()&& schedule.movieId==movieid && !screenSet.has(screen._id)){
                 screenSet.add(screen._id);
