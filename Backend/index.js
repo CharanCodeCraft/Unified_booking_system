@@ -18,7 +18,7 @@ const paymentroute = require('./Routes/payment')
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-const allowedOrigins = ['http://localhost:3000','http://localhost:3001']; // Add more origins as needed
+const allowedOrigins = [process.env.FRONTEND_ADMIN_URL,process.env.FRONTEND_URL]; // Add more origins as needed
 app.use(
     cors({
         origin: function (origin, callback) {
