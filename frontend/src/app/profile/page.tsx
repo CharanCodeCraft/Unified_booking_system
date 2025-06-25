@@ -43,7 +43,7 @@ const ProfilePage = () => {
         })
       );
 
-      setEnrichedBookings(enriched);
+      setEnrichedBookings(enriched.reverse());
     } catch (err) {
       console.log(err);
     }
