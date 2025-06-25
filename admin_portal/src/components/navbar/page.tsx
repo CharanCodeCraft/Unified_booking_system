@@ -177,12 +177,7 @@ const Navbar = () => {
                 >
                   Login
                 </Link>
-                <Link
-                  href="/auth/signup"
-                  className="bg-[#f84464] text-white text-sm font-bold py-1 px-3 rounded"
-                >
-                  Signup
-                </Link>
+                
               </>
             )}
           </div>
